@@ -1,12 +1,30 @@
-def findLocation(number):
+def partOne(number):
     counter = 0
-    prevMax = 0
-    while(True):
+    midPoints = []
+    prevMax = 1
+    steps = 0
+    while (True):
+        if number == 1:
+            break
         if number in range(prevMax, (8 * counter) + 1 + prevMax):
-                break
-        prevMax = (8*counter)+1
+            midPoints.append(prevMax + counter)  # Right
+            midPoints.append(prevMax + (counter * 3))  # Up
+            midPoints.append(prevMax + (counter * 5))  # Left
+            midPoints.append(prevMax + (counter * 7))  # Down
+            break
+        prevMax += (8 * counter)
         counter += 1
-    return counter
+
+    shortest = -1
+    for i in midPoints:
+        if shortest == -1:
+            shortest = abs(number - i)
+        else:
+            if abs(number - i) < shortest: shortest = abs(number - i)
+        steps = shortest + counter
+
+    return steps
 
 
-print(findLocation(325489))
+
+print(partOne(325489))
